@@ -1,0 +1,9 @@
+html,
+body {
+  background-color: rgb(231, 231, 231);
+  height: 100%;
+  overflow: hidden !important;
+}
+body {
+  overflow: auto !important;
+}
