@@ -1,5 +1,11 @@
 <template>
   <main>
+    <nav class="bg-white pa-4">
+      <a href="/">
+        <v-icon>mdi-arrow-left</v-icon>
+        <span>Back</span>
+      </a>
+    </nav>
     <v-container>
       <v-row>
         <v-col>

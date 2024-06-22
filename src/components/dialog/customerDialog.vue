@@ -52,8 +52,8 @@
         ></v-select>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="close"> ยกเลิก </v-btn>
-        <v-btn @click="submit"> บันทึก </v-btn>
+        <v-btn @click="close" class="bg-error"> ยกเลิก </v-btn>
+        <v-btn @click="submit" class="bg-primary"> บันทึก </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

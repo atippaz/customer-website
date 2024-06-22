@@ -44,7 +44,15 @@
                   <v-icon class="me-2" size="small" @click="editHandler(item.customerId)">
                     mdi-pencil
                   </v-icon>
-                  <v-icon size="small" @click="deleteCustomer(item.customerId)">
+                  <v-icon
+                    size="small"
+                    @click="
+                      () => {
+                        deleteCustomerId = item.customerId
+                        dialogDelete = true
+                      }
+                    "
+                  >
                     mdi-delete
                   </v-icon>
                 </td>
@@ -64,15 +72,40 @@
       @save="onSave"
       @update="onUpdate"
     />
+
+    <v-dialog v-model="dialogDelete" width="auto">
+      <v-card
+        width="350"
+        prepend-icon="mdi-delete"
+        text="คุณต้องการลบผู้ใช้คนนี้หรือไม่"
+        title="ต้องการลบข้อมูลหรือไม่ ?"
+      >
+        <template v-slot:actions>
+          <v-btn
+            class="bg-error"
+            text="ยกเลิก"
+            @click="
+              () => {
+                dialogDelete = false
+                deleteCustomerId = null
+              }
+            "
+          ></v-btn>
+
+          <v-btn text="ตกลง" class="bg-primary" @click="deleteCustomer"></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
   </main>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import DialogCustomer, { type FormCustomer } from '@/components/dialog/customerDialog.vue'
 import { useCustomerApi } from '@/composables/api'
-import type { Customer, CustomerData, InsertCustomer } from '@/composables/api/customer'
+import type { CustomerData, InsertCustomer } from '@/composables/api/customer'
 import { useRouter } from 'vue-router'
-
+const deleteCustomerId = ref<number | null>(null)
+const dialogDelete = ref(false)
 const editCustomer = ref<FormCustomer | null>(null)
 const dialog = ref<boolean>(false)
 const loading = ref(false)
@@ -191,9 +224,13 @@ async function editHandler(customerId: number) {
   dialog.value = true
   console.log('click')
 }
-async function deleteCustomer(id: number) {
+async function deleteCustomer() {
+  if (!deleteCustomerId.value) {
+    alert('เกิดข้อผิดพลาด')
+    return
+  }
   try {
-    const result = await customerApi.delete(id)
+    const result = await customerApi.delete(deleteCustomerId.value!)
     if (!result) {
       alert('ไม่สำเร็จ')
       await fetchCustomerData()
@@ -204,6 +241,7 @@ async function deleteCustomer(id: number) {
     alert('เกิดข้อผิดพลาด')
     console.log(ex)
   }
+  dialogDelete.value = false
 }
 const headers = [
   { title: 'ชื่อ', value: 'age' },
