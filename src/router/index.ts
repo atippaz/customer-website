@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/analysis',
       name: 'analysis',
-      component: () => AnalysisDataView
+      component: AnalysisDataView
     }
   ]
 })
