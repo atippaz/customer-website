@@ -100,14 +100,19 @@ function close() {
   emit('close')
 }
 async function addNewFavorite() {
-  const newId = await favoriteApi.create(newFavName.value)
-  if (!newId) {
-    alert('ชื่อซ้ำ')
-    return
+  try {
+    const newId = await favoriteApi.create(newFavName.value)
+    if (!newId) {
+      alert('ชื่อซ้ำ')
+      return
+    }
+    await fetchFavoriteData()
+    formCustomer.value.fav = newId
+    newFavName.value = ''
+  } catch (ex) {
+    alert('เกิดข้อผิดพลาด')
+    console.log(ex)
   }
-  await fetchFavoriteData()
-  formCustomer.value.fav = newId
-  newFavName.value = ''
 }
 function submit() {
   if (

@@ -120,42 +120,53 @@ onMounted(async () => {
 })
 
 async function onSave(data: FormCustomer) {
-  const payload: InsertCustomer = {
-    customerAge: +data.age!,
-    customerFavorite: data.fav!,
-    customerName: data.name!,
-    customerProvince: data.province!
+  try {
+    const payload: InsertCustomer = {
+      customerAge: +data.age!,
+      customerFavorite: data.fav!,
+      customerName: data.name!,
+      customerProvince: data.province!
+    }
+    if (Object.values(payload).some((x) => x === null || x === '')) {
+      alert('กรอกข้อมูลให้ครบ')
+      return
+    }
+    const result = await customerApi.create(payload)
+    if (!result) {
+      alert('แก้ไขไม่สำเร็จ')
+      return
+    }
+    dialog.value = false
+  } catch (ex) {
+    alert('เกิดข้อผิดพลาด')
+    console.log(ex)
   }
-  if (Object.values(payload).some((x) => x === null || x === '')) {
-    alert('กรอกข้อมูลให้ครบ')
-    return
-  }
-  const result = await customerApi.create(payload)
-  if (!result) {
-    alert('แก้ไขไม่สำเร็จ')
-    return
-  }
-  dialog.value = false
+
   await fetchCustomerData()
 }
 async function onUpdate(data: FormCustomer) {
-  if (Object.values(data).some((x) => x === null || x === '')) {
-    alert('กรอกข้อมูลให้ครบ')
-    return
+  try {
+    if (Object.values(data).some((x) => x === null || x === '')) {
+      alert('กรอกข้อมูลให้ครบ')
+      return
+    }
+    const result = await customerApi.update({
+      customerAge: data.age!,
+      customerFav: data.fav!,
+      customerId: data.id!,
+      customerName: data.name!,
+      customerProvince: data.province!
+    })
+    if (!result) {
+      alert('แก้ไขไม่สำเร็จ')
+      return
+    }
+    dialog.value = false
+    await fetchCustomerData()
+  } catch (ex) {
+    alert('เกิดข้อผิดพลาด')
+    console.log(ex)
   }
-  const result = await customerApi.update({
-    customerAge: data.age!,
-    customerFav: data.fav!,
-    customerId: data.id!,
-    customerName: data.name!,
-    customerProvince: data.province!
-  })
-  if (!result) {
-    alert('แก้ไขไม่สำเร็จ')
-    return
-  }
-  dialog.value = false
-  await fetchCustomerData()
 }
 function onClose() {
   editCustomer.value = null
@@ -169,6 +180,7 @@ async function editHandler(customerId: number) {
     return
   }
   await fetchCustomerData()
+
   editCustomer.value = {
     age: result.customerAge,
     fav: result.customerFav,
@@ -180,13 +192,18 @@ async function editHandler(customerId: number) {
   console.log('click')
 }
 async function deleteCustomer(id: number) {
-  const result = await customerApi.delete(id)
-  if (!result) {
-    alert('ไม่สำเร็จ')
+  try {
+    const result = await customerApi.delete(id)
+    if (!result) {
+      alert('ไม่สำเร็จ')
+      await fetchCustomerData()
+      return
+    }
     await fetchCustomerData()
-    return
+  } catch (ex) {
+    alert('เกิดข้อผิดพลาด')
+    console.log(ex)
   }
-  await fetchCustomerData()
 }
 const headers = [
   { title: 'ชื่อ', value: 'age' },
