@@ -12,22 +12,19 @@
           :items="favoriteDropdown"
         >
           <template v-slot:prepend-item>
-            <v-list-item ripple @mousedown.prevent @click="">
-              <v-list-item-content>
-                <v-list-item-title>
-                  <div class="d-flex">
-                    <v-text-field label="ชื่อ" v-model="newFavName" density="compact" class="mb-n4">
-                    </v-text-field>
-                    <v-btn
-                      class="ml-4"
-                      color="primary"
-                      @click="addNewFavorite"
-                      :disabled="newFavName == ''"
-                      >เพิ่มรายการใหม่</v-btn
-                    >
-                  </div>
-                </v-list-item-title>
-              </v-list-item-content>
+            <v-list-item ripple @mousedown.prevent>
+              <v-list-item-title>
+                <div class="d-flex align-center">
+                  <v-text-field label="ชื่อ" v-model="newFavName" class="mb-n4"> </v-text-field>
+                  <v-btn
+                    class="ml-4"
+                    color="primary"
+                    @click="addNewFavorite"
+                    :disabled="newFavName == ''"
+                    >เพิ่มรายการใหม่</v-btn
+                  >
+                </div>
+              </v-list-item-title>
             </v-list-item>
             <v-divider class="mt-2"></v-divider> </template
         ></v-select>
@@ -77,9 +74,7 @@ async function fetchFavoriteData() {
 }
 const newFavName = ref('')
 const { provinceDropdown } = inject(provincePluginSymbol)!
-onMounted(async () => {
-  await fetchFavoriteData()
-})
+
 const props = defineProps({
   open: {
     type: Boolean,
@@ -148,7 +143,8 @@ function initFormData(): FormCustomer {
 const formCustomer = ref<FormCustomer>(initFormData())
 watch(
   () => props.customerData,
-  (e) => {
+  async (e) => {
+    await fetchFavoriteData()
     if (e != null) {
       formCustomer.value = e as FormCustomer
       return

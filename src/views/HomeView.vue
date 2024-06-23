@@ -99,7 +99,7 @@
   </main>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import DialogCustomer, { type FormCustomer } from '@/components/dialog/customerDialog.vue'
 import { useCustomerApi } from '@/composables/api'
 import type { CustomerData, InsertCustomer } from '@/composables/api/customer'
@@ -148,9 +148,6 @@ async function fetchCustomerData() {
   }
   customerDataTable.value = result.data
 }
-onMounted(async () => {
-  await fetchCustomerData()
-})
 
 async function onSave(data: FormCustomer) {
   try {
