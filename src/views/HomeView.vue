@@ -185,7 +185,7 @@ async function onUpdate(data: FormCustomer) {
     }
     const result = await customerApi.update({
       customerAge: data.age!,
-      customerFav: data.fav!,
+      customerFavorite: data.fav!,
       customerId: data.id!,
       customerName: data.name!,
       customerProvince: data.province!
@@ -216,7 +216,7 @@ async function editHandler(customerId: number) {
 
   editCustomer.value = {
     age: result.customerAge,
-    fav: result.customerFav,
+    fav: result.customerFavorite,
     id: result.customerId,
     name: result.customerName,
     province: result.customerProvince

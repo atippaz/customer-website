@@ -35,7 +35,7 @@ export interface Customer {
   customerName: string
   customerId: number
   customerAge: number
-  customerFav: number
+  customerFavorite: number
   customerProvince: number
 }
 export default function customerApi() {
