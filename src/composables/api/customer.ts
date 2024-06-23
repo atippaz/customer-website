@@ -20,9 +20,9 @@ export interface CustomerData {
   customerName: string
   customerId: number
   customerAge: number
-  customerFav: string
+  customerFavorite: string
   customerProvince: string
-  customerFavId: number
+  customerFavoriteId: number
   customerProvinceId: number
 }
 export interface InsertCustomer {

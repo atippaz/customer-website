@@ -307,7 +307,7 @@ const favoriteData = computed(() => {
         name: 'จำนวนคนที่สนใจ',
         data: favoriteDropdown.value
           .filter((t) => optionData.value.favorite.some((x) => x == t.id))
-          .map((x) => customerData.value.filter((y) => y.customerFavId == x.id).length)
+          .map((x) => customerData.value.filter((y) => y.customerFavoriteId == x.id).length)
       }
     ],
     chartOptions: {
@@ -555,7 +555,7 @@ const analysisData = computed(() => {
               (y) =>
                 y.customerAge >= m.min &&
                 y.customerAge <= m.max &&
-                y.customerFavId == x.id &&
+                y.customerFavoriteId == x.id &&
                 y.customerProvinceId == provinceSelect.value?.id
             ).length
         )

@@ -39,7 +39,7 @@
                 <td>{{ item.customerName }}</td>
                 <td>{{ item.customerProvince }}</td>
                 <td>{{ item.customerAge }}</td>
-                <td>{{ item.customerFav }}</td>
+                <td>{{ item.customerFavorite }}</td>
                 <td>
                   <v-icon class="me-2" size="small" @click="editHandler(item.customerId)">
                     mdi-pencil
