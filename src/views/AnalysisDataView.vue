@@ -177,7 +177,7 @@
             <v-card-title>
               <p class="text-h5 font-weight-bold">
                 ข้อมูลลูกค้าจังหวัด
-                {{ provinceSelect?.value || '"ยังไม่ได้เลือก"' }} ในเเต่ละช่วงอายุ
+                {{ provinceSelect?.value || '"ยังไม่ได้เลือก สามารถคลิ๊กเลือกจังหวัดที่ด้านบนได้เลย"' }} ในเเต่ละช่วงอายุ 
               </p>
             </v-card-title>
             <v-card-text>
