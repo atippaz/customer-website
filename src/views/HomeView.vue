@@ -1,10 +1,4 @@
 <template>
-
-  <div class="bg-white pa-4 px-12 d-flex justify-end">
-  <a href="https://server.atipnasakun.online/" >
-    ผลงานอื่นๆเพิ่มเติม
-  </a>
-  </div>
   <main class="container">
     <div class="mt-12 mb-6 d-flex justify-end">
       <v-btn class="bg-info" @click="router.push({ name: 'analysis' })">สรุปข้อมูล</v-btn>
